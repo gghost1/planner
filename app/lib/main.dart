@@ -1,3 +1,4 @@
+import 'package:app/repositories/db/dbInit.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -8,11 +9,7 @@ import 'screens/activities_list_screen.dart';
 import 'screens/notes_list_screen.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  Hive.registerAdapter(UserAdapter());
-  Hive.registerAdapter(NoteAdapter());
+  DbInit.init();
   runApp(const MainApp());
 }
 

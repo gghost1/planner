@@ -1,5 +1,8 @@
 package com.example.demo.entity.activities;
 
+import com.example.demo.entity.chats.Chat;
+import com.example.demo.entity.chats.ChatEntity;
+import com.example.demo.entity.chats.RpChat;
 import com.example.demo.entity.elements.Element;
 import com.example.demo.entity.elements.RpElements;
 import com.jcabi.jdbc.JdbcSession;
@@ -17,7 +20,8 @@ public record ActivityEntity(
         boolean passed,
         LocalDate date,
         DataSource dataSource,
-        RpElements rpElements
+        RpElements rpElements,
+        RpChat rpChat
 ) implements Activity {
     @Override
     public List<Element> elements() throws SQLException {
@@ -41,5 +45,24 @@ public record ActivityEntity(
                 throw new RuntimeException(e);
             }
         }).toList();
+    }
+
+    @Override
+    public Chat chat() throws SQLException {
+        JdbcSession jdbcSession = new JdbcSession(dataSource);
+        UUID chatId = jdbcSession.sql("""
+                SELECT chat_id FROM activity_chats
+                WHERE activity_id = ?
+                """)
+                .set(id)
+                .select((rset, stmt) -> {
+                    if (rset.next()) {
+                        return UUID.fromString(rset.getString("chat_id"));
+                    } else {
+                        throw new SQLException("No data found for the given ID");
+                    }
+                });
+
+        return rpChat.get(chatId);
     }
 }

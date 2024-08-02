@@ -5,12 +5,14 @@ part 'note.g.dart';
 @HiveType(typeId: 1)
 class Note extends HiveObject {
   @HiveField(0)
+  String id;
+  @HiveField(1)
   String information;
 
-  @HiveField(1)
-  int date;  // Store DateTime as timestamp
+  @HiveField(2)
+  int date;
 
-  Note(this.information, this.date);
+  Note(this.id,this.information, this.date);
 
   DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(date);
 }

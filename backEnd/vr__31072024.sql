@@ -45,9 +45,14 @@ CREATE TABLE user_activities (
 
 CREATE TABLE chats (
                        id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                       activity_id     UUID NOT NULL REFERENCES activities(id),
                        creation_date   TIMESTAMP NOT NULL
 );
+
+CREATE TABLE activity_chat (
+                               activity_id UUID NOT NULL REFERENCES activities(id),
+                               chat_id     UUID NOT NULL REFERENCES chats(id),
+                               PRIMARY KEY (activity_id, user_id)
+)
 
 CREATE TABLE messages (
                           id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

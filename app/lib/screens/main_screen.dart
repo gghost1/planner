@@ -11,10 +11,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RpNote rpNote = RpNote();
-    rpNote.saveNote(Note("1", DateTime.now().millisecondsSinceEpoch));
-    rpNote.saveNote(Note("2", (DateTime.now().millisecondsSinceEpoch)+100));
-    rpNote.saveNote(Note("3", DateTime.now().millisecondsSinceEpoch));
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SafeArea(
@@ -23,21 +20,7 @@ class MainScreen extends StatelessWidget {
           children: [
 
             Expanded( flex: 26, child: SizedBox() ),
-          FutureBuilder<List<Note>>(
-            future: rpNote.getNotes(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text('Ошибка: ${snapshot.error}');
-              } else if (snapshot.hasData) {
-                print(snapshot.data?.first.information);
-                return Text('a');
-              } else {
-                return Text('Нет данных');
-              }
-            },
-          ),
+
 
 
             Expanded(

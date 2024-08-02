@@ -1,5 +1,6 @@
 package com.example.demo.entity.activities;
 
+import com.example.demo.entity.chats.Chat;
 import com.example.demo.entity.elements.Element;
 
 import java.sql.SQLException;
@@ -13,4 +14,5 @@ public interface Activity {
     boolean passed();
     LocalDate date();
     List<Element> elements() throws SQLException;
+    Chat chat() throws SQLException;
 }
