@@ -13,6 +13,9 @@ class Message extends HiveObject {
   @HiveField(2)
   int date;
 
+  @HiveField(3)
+  bool systems;
 
-  Message(this.id, this.text, this.date);
+
+  Message(this.id, this.text, this.date, this.systems);
 }

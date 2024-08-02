@@ -20,19 +20,22 @@ class MessageAdapter extends TypeAdapter<Message> {
       fields[0] as String,
       fields[1] as String,
       fields[2] as int,
+      fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Message obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.text)
       ..writeByte(2)
-      ..write(obj.date);
+      ..write(obj.date)
+      ..writeByte(3)
+      ..write(obj.systems);
   }
 
   @override

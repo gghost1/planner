@@ -12,7 +12,7 @@ class Note extends HiveObject {
   @HiveField(2)
   int date;
 
-  Note(this.id,this.information, this.date);
+  Note(this.id, this.information, this.date);
 
   DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(date);
 }
