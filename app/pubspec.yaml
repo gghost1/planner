@@ -1,0 +1,63 @@
+name: app
+description: "All in One"
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.4.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  hive: ^2.0.5
+  hive_flutter: ^1.1.0
+  path_provider: ^2.0.11
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  hive_generator: ^1.1.0
+  build_runner: ^2.1.7
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - lib/assets/
+  
+    - icons/
+
+  fonts:
+    - family: SFUIText
+      fonts:
+        - asset: lib/assets/fonts/SFUIText-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/SFUIText-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: lib/assets/fonts/SFUIText-Heavy.ttf
+          weight: 800
+        - asset: lib/assets/fonts/SFUIText-HeavyItalic.ttf
+          weight: 800
+          style: italic
+        - asset: lib/assets/fonts/SFUIText-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: lib/assets/fonts/SFUIText-Light.ttf
+          weight: 300
+        - asset: lib/assets/fonts/SFUIText-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: lib/assets/fonts/SFUIText-Medium.ttf
+          weight: 500
+        - asset: lib/assets/fonts/SFUIText-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: lib/assets/fonts/SFUIText-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/SFUIText-Semibold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/SFUIText-SemiboldItalic.ttf
+          weight: 600
+          style: italic
