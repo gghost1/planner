@@ -8,32 +8,38 @@ import '../entities/chats/chat.dart';
 
 class RpChat {
 
-  static Future<Chat> getChatByActivity(String activityId) async {
+  HashMap<String, dynamic> boxes;
+
+  RpChat(this.boxes);
+
+  Future<Chat> getChatByActivity(String activityId) async {
     var box;
-    box = await DbInit.activityChatBox();
-    String chatId = box.get(0)?[activityId];
-    box = await DbInit.chatBox();
-    return box.get(0)?[chatId];
+    box = boxes['activitychat'];
+    String chatId = box.get(0)![activityId]!;
+    box = boxes['chats'];
+    return box.get(0)![chatId]!;
   }
 
 
-  static Future<void> saveChat(Chat chat,  [String? activityInformation]) async {
+  Future<void> saveChat(Chat chat,  [String? activityInformation]) async {
     var box;
-    box = await DbInit.chatBox();
-    HashMap<String, Chat>? chats = box.get(0);
-    chats?.addEntries([MapEntry<String, Chat>(chat.id, chat)]);
-    box.put(0, chats!);
-
+    box = boxes['chats'];
+    HashMap<String, Chat> chats = box.get(0)!;
+    chats.addEntries([MapEntry<String, Chat>(chat.id, chat)]);
+    box.put(0, chats);
+// id will returned from server
     Activity activity = Activity("id", (activityInformation ?? ""), false, DateTime.now().millisecondsSinceEpoch);
-    RpActivity.saveActivity(activity);
+    await RpActivity(boxes).saveActivity(activity);
 
-    box = await DbInit.activityChatBox();
-    HashMap<String, String>? activityChat = box.get(0);
-    activityChat?.addEntries([MapEntry(activity.id, chat.id)]);
-    box.put(0, activityChat!);
+    box = boxes['activitychat'];
+    HashMap<String, String> activityChat = box.get(0)!;
+    activityChat.addEntries([MapEntry(activity.id, chat.id)]);
+    box.put(0, activityChat);
 
-    //
-    // box = await DbInit.chatMessageBox();
-    // box.get(0)?.addEntries([MapEntry(chat.id, [])]);
+
+    box = boxes['chatmessages'];
+    HashMap<String, List<String>> messageBox = box.get(0)!;
+    messageBox.addEntries([MapEntry(chat.id, [])]);
+    box.put(0, messageBox);
   }
 }

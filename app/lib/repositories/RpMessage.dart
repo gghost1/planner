@@ -1,27 +1,37 @@
+import 'dart:collection';
+
 import '../entities/messges/message.dart';
 import 'db/dbInit.dart';
 
 class RpMessage {
 
-  static Future<List<Message>?> getMessagesByChat(String chatId) async {
+  HashMap<String, dynamic> boxes;
+
+  RpMessage(this.boxes);
+
+  Future<List<Message>> getMessagesByChat(String chatId) async {
     var box;
-    box = await DbInit.chatMessageBox();
-    List<String>? messageIds = box.getAt(0)?[chatId];
+    box = boxes['chatmessages'];
+    List<String> messageIds = box.getAt(0)![chatId]!;
     List<Message> messages = [];
-    box = await DbInit.messageBox();
-    messageIds?.forEach((element) {
-      messages.add(box.getAt(0)?[element]);
-    });
+    box = boxes['messages'];
+    for (var element in messageIds) {
+      messages.add(box.getAt(0)![element]!);
+    }
     return messages;
   }
 
-  static Future<void> saveMessage(Message message, String chatId) async {
+  Future<void> saveMessage(Message message, String chatId) async {
     var box;
-    box = await DbInit.messageBox();
-    box.getAt(0)?.addEntries([MapEntry(message.id, message)]);
+    box = boxes['messages'];
+    HashMap<String, Message> messages = box.getAt(0)!;
+    messages.addEntries([MapEntry(message.id, message)]);
+    box.put(0, messages);
 
-    box = await DbInit.chatMessageBox();
-    box.getAt(0)?[chatId].add(message.id);
+    box = boxes['chatmessages'];
+    HashMap<String, List<String>> chatMessages = box.getAt(0)!;
+    chatMessages[chatId]!.add(message.id);
+    box.put(0, chatMessages);
   }
 
 }
